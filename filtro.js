@@ -1,63 +1,52 @@
-// Tenemos un li de productos
-
+// Array de productos, los organizamos bien por sus características. Intenté hacer una carpeta para los zapatos pero no me funcionó y los mantuve aquí
 const productos = [
-  {nombre: "Zapato negro", tipo: "zapato", color: "negro", img: "./taco-negro.jpg"},
-  {nombre: "Zapato azul", tipo: "zapato", color: "azul", img: "./taco-azul.jpg"},
-  {nombre: "Bota negra", tipo: "bota", color: "negro", img: "./bota-negra.jpg"},
-  {nombre: "Bota azul", tipo: "bota", color: "azul", img: "./bota-azul.jpg"},
-  {nombre: "Zapato rojo", tipo: "zapato", color: "rojo", img: "./zapato-rojo.jpg"}
-]
+  { nombre: "Zapato negro", tipo: "zapato", color: "negro", img: "./taco-negro.jpg" },
+  { nombre: "Zapato azul", tipo: "zapato", color: "azul", img: "./taco-azul.jpg" },
+  { nombre: "Bota negra", tipo: "bota", color: "negro", img: "./bota-negra.jpg" },
+  { nombre: "Bota azul", tipo: "bota", color: "azul", img: "./bota-azul.jpg" },
+  { nombre: "Zapato rojo", tipo: "zapato", color: "rojo", img: "./zapato-rojo.jpg" },
+];
 
-const li = document.getElementsByName("lista-de-productos")
-const $i = document.querySelector('.input');
+// Seleccionamos los elementos de HTML que vamos a ocupar
+const listaDeProductos = document.getElementById("lista-de-productos");
+const inputBusqueda = document.getElementById("input-busqueda");
+const botonFiltrar = document.getElementById("boton-filtrar");
 
-for (let i = 0; i < productos.length; i++) {
-  var d = document.createElement("div")
-  d.classList.add("producto")
-
-  var ti = document.createElement("p")
-  ti.classList.add("titulo")
-  ti.textContent = productos[i].nombre
+// Función para ver los zapatos de la lista
+function displayProductos(lista) {
+  listaDeProductos.innerHTML = ""; // Limpiamos la lista antes de renderizar
   
-  var imagen = document.createElement("img");
-  imagen.setAttribute('src', productos[i].img);
+  // Aquí vamos a iterar cada producto
+  lista.forEach(producto => {
+    const productoDiv = document.createElement("div");
+    productoDiv.classList.add("producto");
 
-  d.appendChild(ti)
-  d.appendChild(imagen)
+    const titulo = document.createElement("p");
+    titulo.classList.add("titulo");
+    titulo.textContent = producto.nombre;
 
-  li.appendChild(d)
+    const imagen = document.createElement("img");
+    imagen.setAttribute("src", producto.img);
+    imagen.setAttribute("alt", producto.nombre);
+
+    // Añadimos el título y la imagen al contenedor de producto
+    productoDiv.appendChild(titulo);
+    productoDiv.appendChild(imagen);
+    listaDeProductos.appendChild(productoDiv);
+  });
 }
 
-displayProductos(productos)
-const botonDeFiltro = document.querySelector("button");
-
-botonDeFiltro.onclick = function() {
-  while (li.firstChild) {
-    li.removeChild(li.firstChild);
-  }
-
-  const texto = $i.value;
-  console.log(texto);
-  const productosFiltrados = filtrado(productos, texto );
-
-  for (let i = 0; i < productosFiltrados.length; i++) {
-    var d = document.createElement("div")
-    d.classList.add("producto")
-  
-    var ti = document.createElement("p")
-    ti.classList.add("titulo")
-    ti.textContent = productosFiltrados[i].nombre
-    
-    var imagen = document.createElement("img");
-    imagen.setAttribute('src', productosFiltrados[i].img);
-  
-    d.appendChild(ti)
-    d.appendChild(imagen)
-  
-    li.appendChild(d)
-  }
+// Función de filtrado que toma el texto ingresado y devuelve productos coincidentes
+function filtrarProductos() {
+  const texto = inputBusqueda.value.toLowerCase(); // Convertimos el texto a minúsculas
+  const productosFiltrados = productos.filter(
+    item => item.tipo.includes(texto) || item.color.includes(texto)
+  );
+  displayProductos(productosFiltrados); // Mostramos los productos filtrados
 }
 
-const filtrado = (productos = [], texto) => {
-  return productos.filter(item => item.tipo.includes(texto) || item.color.includes(texto));
-}  
+// Arreglamos el event listener para el botón de filtrar
+botonFiltrar.addEventListener("click", filtrarProductos);
+
+// Aquí la lista completa de productos al cargar la página
+displayProductos(productos);

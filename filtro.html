@@ -1,24 +1,21 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="filtro.css">
   <title>Filtros en JS</title>
+  <link rel="stylesheet" href="filtro.css"> <!-- nos aseguramos de que esté bien enlazado -->
 </head>
 
 <body>
-
-  <div>
-      <input type="text" placeholder="Seleccioná un color o tipo">
-      <button>Filtrar</button>
-      <h1>Lista de productos </h1>
-      <div id="lista-de-productos">
-    </div>
+  <div class="container">
+    <input id="input-busqueda" type="text" placeholder="Selecciona un color o tipo">
+    <button id="boton-filtrar">Filtrar</button>
+    <h1>Lista de productos</h1>
+    <div id="lista-de-productos"></div> 
   </div>
-  <script src="../filtro.js"></script>
+  <script src="filtro.js"></script><!-- Cambié la ruta a "filtro.js" -->
 </body>
 
 </html>
